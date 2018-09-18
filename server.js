@@ -9,18 +9,23 @@ var PORT = process.env.port || 3000;
 var app = express();
 
 //require the routes.js file and pass the router object as argument
+
+
+// Use body-parser for handling form submissions
+app.use(bodyParser.urlencoded({ extended: true }));
+
 require("./controllers/scrape.js")(app);
 require("./controllers/headline.js")(app);
 require("./controllers/note.js")(app);
 
-// Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: false }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static(__dirname + "/public"));
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({ defaultLayout: "main",
+partialsDir: __dirname+ "/views/layouts/partials"
+}));
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB

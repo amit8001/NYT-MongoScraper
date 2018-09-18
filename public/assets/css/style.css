@@ -1,12 +1,25 @@
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 61px;
-    line-height: 50px; /* Vertically center the text there */
-    background-color: grey;
-    color:white;
-    text-align: center;
-    border-top: 5px solid teal;
-  }
+
+.jumbotron{
+  font-family: "Times New Roman", Times, serif;
+  font-size: xx-large;
+  font-weight: bold;
+
+}
+
+.deleteNote {
+display: inline-block;
+}
+
+#scrape {
+  margin: 8px 0px;
+}
+
+body {
+  background-color: black;
+  padding-top: 70px;
+}
+
+.previousNotes {
+  display: inline-block;
+  width: 90%
+}

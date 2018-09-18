@@ -8,9 +8,9 @@ var Schema = mongoose.Schema;
 var NoteSchema = new Schema({
   // `body` is of type String
 
-  noteText: {
+  body: {
     type: String
-  },
+},
   article: {
     type: Schema.Types.ObjectId,
     ref: "Article"

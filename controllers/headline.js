@@ -15,16 +15,16 @@ module.exports = function(app) {
           var hbsObject = {
             article: data
           };
-          console.log(hbsObject);
+        //  console.log(hbsObject);
           res.render("home", hbsObject);
         });
       });
 
     //At the /saved path, display/render the saved.handlebars file.
     app.get("/saved", function(req, res) {
-        db.Article.find({"saved": true}).populate("notes").exec(function(error, articles) {
+        db.Article.find({"saved": true}).populate("notes").exec(function(error, data) {
           var hbsObject = {
-            article: articles
+            article: data
           };
           res.render("saved", hbsObject);
         });
@@ -50,7 +50,26 @@ module.exports = function(app) {
   // Save an article
   app.post("/articles/save/:id", function(req, res) {
         // Use the article id to find and update its saved boolean
-        db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true})
+        db.Article.findOneAndUpdate({ "_id": req.params.id }, { "saved": true},{new: true})
+        // Execute the above query
+        .exec(function(err, doc) {
+          // Log any errors
+          if (err) {
+            console.log(err);
+          }
+          else {
+            // Or send the document to the browser
+           
+            res.send(doc);
+         //   console.log("********"+JSON.stringify(doc));
+          }
+        });
+  });
+  
+  // Delete an article
+  app.post("/articles/delete/:id", function(req, res) {
+        // Use the article id to find and update its saved boolean
+        db.Article.findOneAndUpdate({ "_id": req.params.id }, {"saved": false, "notes": []})
         // Execute the above query
         .exec(function(err, doc) {
           // Log any errors
@@ -63,35 +82,18 @@ module.exports = function(app) {
           }
         });
   });
-  
-  // Delete an article
-//   app.post("/articles/delete/:id", function(req, res) {
-//         // Use the article id to find and update its saved boolean
-//         db.Article.findOneAndUpdate({ "_id": req.params.id }, {"saved": false, "notes": []})
-//         // Execute the above query
-//         .exec(function(err, doc) {
-//           // Log any errors
-//           if (err) {
-//             console.log(err);
-//           }
-//           else {
-//             // Or send the document to the browser
-//             res.send(doc);
-//           }
-//         });
-//   });
 
-    //Delete an article
-    app.delete("/articles/:id", function(req, res) {
-        // Remember: when searching by an id, the id needs to be passed in
-        db.Article.deleteOne({ _id: req.params.id },
-            function(err, data) {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                res.json(data);
-                }
-        });
-    });
+    // //Delete an article
+    // app.delete("/articles/:id", function(req, res) {
+    //     // Remember: when searching by an id, the id needs to be passed in
+    //     db.Article.deleteOne({ _id: req.params.id },
+    //         function(err, data) {
+    //             if (err) {
+    //                 console.log(err);
+    //             }
+    //             else {
+    //             res.json(data);
+    //             }
+    //     });
+    // });
 }
