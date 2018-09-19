@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose"); //Mongoose ODM NPM package
 var cheerio = require("cheerio");
 
-var PORT = process.env.port || 3000;
+var PORT = process.env.PORT || 3000;
 
 // Initialize Express
 var app = express();
